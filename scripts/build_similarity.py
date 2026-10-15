@@ -60,7 +60,7 @@ def main() -> None:
         with driver.session(database="neo4j") as session:
             graph_exists = session.run(
                 """
-                "CALL gds.graph.drop('movie-audiences') YIELD graphName RETURN graphName"
+                CALL gds.graph.exists('movie-audiences')
                 YIELD exists
                 RETURN exists
                 """
