@@ -1,0 +1,13 @@
+[MAIN]
+py-version=3.12
+
+[FORMAT]
+max-line-length=100
+
+[REPORTS]
+score=yes
+
+[SIMILARITIES]
+ignore-comments=yes
+ignore-docstrings=yes
+ignore-imports=yes

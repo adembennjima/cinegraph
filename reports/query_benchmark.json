@@ -1,0 +1,325 @@
+{
+  "experiment": "Forced label scan versus existing movieId index",
+  "parameters": {
+    "movie_id": 999999999,
+    "limit": 1
+  },
+  "repeats_per_query": 20,
+  "identical_results": true,
+  "measurements": {
+    "scan": {
+      "query": "MATCH (m:Movie)\nUSING SCAN m:Movie\nWHERE m.movieId = $movie_id\nRETURN m.movieId AS movieId, m.title AS title\nLIMIT $limit",
+      "median_elapsed_ms": 4.317375016398728,
+      "min_elapsed_ms": 2.6621250435709953,
+      "max_elapsed_ms": 9.057499933987856,
+      "samples_ms": [
+        3.812291892245412,
+        4.038166953250766,
+        4.582749912515283,
+        3.877582959830761,
+        4.223082913085818,
+        4.008583026006818,
+        3.544165985658765,
+        4.372375085949898,
+        3.8787079975008965,
+        4.352583084255457,
+        3.075665794312954,
+        4.302292130887508,
+        5.309958942234516,
+        9.057499933987856,
+        5.74554200284183,
+        4.332457901909947,
+        5.476499907672405,
+        2.6621250435709953,
+        5.324499914422631,
+        4.760249983519316
+      ],
+      "rows": [],
+      "explain_operators": [
+        "ProduceResults@neo4j",
+        "Projection@neo4j",
+        "Limit@neo4j",
+        "Filter@neo4j",
+        "NodeByLabelScan@neo4j"
+      ],
+      "profile_operators": [
+        "ProduceResults@neo4j",
+        "Projection@neo4j",
+        "Limit@neo4j",
+        "Filter@neo4j",
+        "NodeByLabelScan@neo4j"
+      ],
+      "total_db_hits": 19485,
+      "profile": {
+        "args": {
+          "GlobalMemory": 64,
+          "planner-impl": "IDP",
+          "Memory": 0,
+          "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.26.32\n\n+------------------+----+-----------------------------------------------+----------------+------+---------+----------------+------------------------+\n| Operator         | Id | Details                                       | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+------------------+----+-----------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProduceResults  |  0 | movieId, title                                |              1 |    0 |       0 |              0 |                    0/0 |\n| |                +----+-----------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Projection      |  1 | cache[m.movieId] AS movieId, m.title AS title |              1 |    0 |       0 |                |                    0/0 |\n| |                +----+-----------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Limit           |  2 | $limit                                        |              1 |    0 |       0 |                |                    0/0 |\n| |                +----+-----------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Filter          |  3 | cache[m.movieId] = $movie_id                  |              1 |    0 |    9742 |                |                    0/0 |\n| |                +----+-----------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +NodeByLabelScan |  4 | m:Movie                                       |           9742 | 9742 |    9743 |                |                    0/0 |\n+------------------+----+-----------------------------------------------+----------------+------+---------+----------------+------------------------+\n\nTotal database accesses: 19485, total allocated memory: 64\n",
+          "runtime": "SLOTTED",
+          "runtime-impl": "SLOTTED",
+          "version": "5",
+          "DbHits": 0,
+          "Details": "movieId, title",
+          "planner-version": "5.26.32",
+          "runtime-version": "5.26.32",
+          "Id": 0,
+          "EstimatedRows": 0.9999999999999999,
+          "planner": "COST",
+          "PageCacheMisses": 0,
+          "Rows": 0,
+          "PageCacheHits": 0
+        },
+        "pageCacheMisses": 0,
+        "children": [
+          {
+            "args": {
+              "Details": "cache[m.movieId] AS movieId, m.title AS title",
+              "Id": 1,
+              "PageCacheMisses": 0,
+              "EstimatedRows": 0.9999999999999999,
+              "DbHits": 0,
+              "Rows": 0,
+              "PageCacheHits": 0
+            },
+            "pageCacheMisses": 0,
+            "children": [
+              {
+                "args": {
+                  "Details": "$limit",
+                  "Id": 2,
+                  "PageCacheMisses": 0,
+                  "EstimatedRows": 0.9999999999999999,
+                  "DbHits": 0,
+                  "Rows": 0,
+                  "PageCacheHits": 0
+                },
+                "pageCacheMisses": 0,
+                "children": [
+                  {
+                    "args": {
+                      "Details": "cache[m.movieId] = $movie_id",
+                      "Id": 3,
+                      "PageCacheMisses": 0,
+                      "EstimatedRows": 0.9999999999999999,
+                      "DbHits": 9742,
+                      "Rows": 0,
+                      "PageCacheHits": 0
+                    },
+                    "pageCacheMisses": 0,
+                    "children": [
+                      {
+                        "args": {
+                          "Details": "m:Movie",
+                          "Id": 4,
+                          "PageCacheMisses": 0,
+                          "EstimatedRows": 9742.0,
+                          "DbHits": 9743,
+                          "Rows": 9742,
+                          "PageCacheHits": 0
+                        },
+                        "pageCacheMisses": 0,
+                        "dbHits": 9743,
+                        "identifiers": [
+                          "m"
+                        ],
+                        "operatorType": "NodeByLabelScan@neo4j",
+                        "rows": 9742,
+                        "pageCacheHitRatio": 0.0,
+                        "pageCacheHits": 0
+                      }
+                    ],
+                    "dbHits": 9742,
+                    "identifiers": [
+                      "m"
+                    ],
+                    "operatorType": "Filter@neo4j",
+                    "rows": 0,
+                    "pageCacheHitRatio": 0.0,
+                    "pageCacheHits": 0
+                  }
+                ],
+                "dbHits": 0,
+                "identifiers": [
+                  "m"
+                ],
+                "operatorType": "Limit@neo4j",
+                "rows": 0,
+                "pageCacheHitRatio": 0.0,
+                "pageCacheHits": 0
+              }
+            ],
+            "dbHits": 0,
+            "identifiers": [
+              "m",
+              "movieId",
+              "title"
+            ],
+            "operatorType": "Projection@neo4j",
+            "rows": 0,
+            "pageCacheHitRatio": 0.0,
+            "pageCacheHits": 0
+          }
+        ],
+        "dbHits": 0,
+        "identifiers": [
+          "m",
+          "movieId",
+          "title"
+        ],
+        "operatorType": "ProduceResults@neo4j",
+        "rows": 0,
+        "pageCacheHitRatio": 0.0,
+        "pageCacheHits": 0
+      }
+    },
+    "index": {
+      "query": "MATCH (m:Movie)\nUSING INDEX m:Movie(movieId)\nWHERE m.movieId = $movie_id\nRETURN m.movieId AS movieId, m.title AS title\nLIMIT $limit",
+      "median_elapsed_ms": 1.0425415821373463,
+      "min_elapsed_ms": 0.6639170460402966,
+      "max_elapsed_ms": 1.7258748412132263,
+      "samples_ms": [
+        1.0669580660760403,
+        0.9437501430511475,
+        1.211749855428934,
+        0.9117079898715019,
+        1.2459589634090662,
+        0.8340419735759497,
+        1.5762499533593655,
+        0.8113328367471695,
+        1.0181250981986523,
+        0.8212500251829624,
+        0.9570419788360596,
+        0.6639170460402966,
+        1.3654578942805529,
+        1.2063749600201845,
+        1.7258748412132263,
+        0.934625044465065,
+        1.5371660701930523,
+        0.9923330508172512,
+        1.562874997034669,
+        1.1452499311417341
+      ],
+      "rows": [],
+      "explain_operators": [
+        "ProduceResults@neo4j",
+        "Projection@neo4j",
+        "Limit@neo4j",
+        "NodeUniqueIndexSeek@neo4j"
+      ],
+      "profile_operators": [
+        "ProduceResults@neo4j",
+        "Projection@neo4j",
+        "Limit@neo4j",
+        "NodeUniqueIndexSeek@neo4j"
+      ],
+      "total_db_hits": 1,
+      "profile": {
+        "args": {
+          "GlobalMemory": 64,
+          "planner-impl": "IDP",
+          "Memory": 0,
+          "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.26.32\n\n+----------------------+----+---------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| Operator             | Id | Details                                                             | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+----------------------+----+---------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProduceResults      |  0 | movieId, title                                                      |              1 |    0 |       0 |              0 |                    0/0 |\n| |                    +----+---------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Projection          |  1 | cache[m.movieId] AS movieId, m.title AS title                       |              1 |    0 |       0 |                |                    0/0 |\n| |                    +----+---------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Limit               |  2 | $limit                                                              |              1 |    0 |       0 |                |                    0/0 |\n| |                    +----+---------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +NodeUniqueIndexSeek |  3 | UNIQUE m:Movie(movieId) WHERE movieId = $movie_id, cache[m.movieId] |              1 |    0 |       1 |                |                    0/0 |\n+----------------------+----+---------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n\nTotal database accesses: 1, total allocated memory: 64\n",
+          "runtime": "SLOTTED",
+          "runtime-impl": "SLOTTED",
+          "version": "5",
+          "DbHits": 0,
+          "Details": "movieId, title",
+          "planner-version": "5.26.32",
+          "runtime-version": "5.26.32",
+          "Id": 0,
+          "EstimatedRows": 0.9999999999999999,
+          "planner": "COST",
+          "PageCacheMisses": 0,
+          "Rows": 0,
+          "PageCacheHits": 0
+        },
+        "pageCacheMisses": 0,
+        "children": [
+          {
+            "args": {
+              "Details": "cache[m.movieId] AS movieId, m.title AS title",
+              "Id": 1,
+              "PageCacheMisses": 0,
+              "EstimatedRows": 0.9999999999999999,
+              "DbHits": 0,
+              "Rows": 0,
+              "PageCacheHits": 0
+            },
+            "pageCacheMisses": 0,
+            "children": [
+              {
+                "args": {
+                  "Details": "$limit",
+                  "Id": 2,
+                  "PageCacheMisses": 0,
+                  "EstimatedRows": 0.9999999999999999,
+                  "DbHits": 0,
+                  "Rows": 0,
+                  "PageCacheHits": 0
+                },
+                "pageCacheMisses": 0,
+                "children": [
+                  {
+                    "args": {
+                      "Details": "UNIQUE m:Movie(movieId) WHERE movieId = $movie_id, cache[m.movieId]",
+                      "Id": 3,
+                      "PageCacheMisses": 0,
+                      "EstimatedRows": 0.9999999999999999,
+                      "DbHits": 1,
+                      "Rows": 0,
+                      "PageCacheHits": 0
+                    },
+                    "pageCacheMisses": 0,
+                    "dbHits": 1,
+                    "identifiers": [
+                      "m"
+                    ],
+                    "operatorType": "NodeUniqueIndexSeek@neo4j",
+                    "rows": 0,
+                    "pageCacheHitRatio": 0.0,
+                    "pageCacheHits": 0
+                  }
+                ],
+                "dbHits": 0,
+                "identifiers": [
+                  "m"
+                ],
+                "operatorType": "Limit@neo4j",
+                "rows": 0,
+                "pageCacheHitRatio": 0.0,
+                "pageCacheHits": 0
+              }
+            ],
+            "dbHits": 0,
+            "identifiers": [
+              "m",
+              "movieId",
+              "title"
+            ],
+            "operatorType": "Projection@neo4j",
+            "rows": 0,
+            "pageCacheHitRatio": 0.0,
+            "pageCacheHits": 0
+          }
+        ],
+        "dbHits": 0,
+        "identifiers": [
+          "m",
+          "movieId",
+          "title"
+        ],
+        "operatorType": "ProduceResults@neo4j",
+        "rows": 0,
+        "pageCacheHitRatio": 0.0,
+        "pageCacheHits": 0
+      }
+    }
+  },
+  "limitations": [
+    "Both queries run against the same already-indexed database.",
+    "The scan hint simulates lookup without using that index.",
+    "Warm-cache client timings include driver and network overhead.",
+    "This small lookup does not measure whole-app performance."
+  ]
+}

@@ -7,3 +7,6 @@ httpx
 pytest
 pytest-cov
 pylint
+openai
+streamlit
+scikit-learn

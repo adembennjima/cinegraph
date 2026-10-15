@@ -1,0 +1,29 @@
+{
+  "seed": 42,
+  "task": "Hidden positive-link recovery",
+  "split": "60% feature graph / 20% training / 20% test",
+  "graph_likes": 29148,
+  "training_examples": 19432,
+  "test_examples": 19432,
+  "negative_sampling": "One unique unrated pair per positive; same user distribution in both classes",
+  "features": [
+    "user_like_degree",
+    "movie_like_degree",
+    "genre_affinity",
+    "three_hop_path_count"
+  ],
+  "popularity_baseline": {
+    "roc_auc": 0.8815548802965947,
+    "average_precision": 0.8844866994882068
+  },
+  "logistic_regression": {
+    "roc_auc": 0.8999177187921237,
+    "average_precision": 0.907314780303188
+  },
+  "limitations": [
+    "Unrated movies are not confirmed dislikes.",
+    "Random edge split does not measure future behavior.",
+    "Balanced sampled candidates do not represent the full movie catalog.",
+    "This experiment does not replace the API recommender."
+  ]
+}
