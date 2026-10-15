@@ -222,8 +222,16 @@ def api_request(method, path, **kwargs):
     """Call the backend and display readable errors."""
     try:
         with httpx.Client(timeout=45.0) as client:
+            headers = dict(kwargs.pop("headers", {}))
+            application_key = os.getenv("APP_API_KEY", "")
+            if application_key:
+                headers["X-API-Key"] = application_key
+
             response = client.request(
-                method, f"{API_URL}{path}", **kwargs
+                method,
+                f"{API_URL}{path}",
+                headers=headers,
+                **kwargs,
             )
 
         if response.is_error:

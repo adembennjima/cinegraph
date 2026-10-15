@@ -13,7 +13,7 @@ class Settings(BaseSettings):
 
     openai_api_key: SecretStr | None = None
     openai_model: str = "gpt-4.1-mini"
-
+    app_api_key: SecretStr
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",

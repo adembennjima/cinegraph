@@ -33,6 +33,7 @@ services:
       NEO4J_PASSWORD: "${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}"
       OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
       OPENAI_MODEL: "${OPENAI_MODEL:-gpt-4.1-mini}"
+      APP_API_KEY: "${APP_API_KEY:?Set APP_API_KEY in .env}"
     depends_on:
       neo4j:
         condition: service_healthy
@@ -62,6 +63,7 @@ services:
       - "127.0.0.1:8501:8501"
     environment:
       API_BASE_URL: http://api:8000
+      APP_API_KEY: "${APP_API_KEY:?Set APP_API_KEY in .env}"
     depends_on:
       api:
         condition: service_healthy

@@ -5,7 +5,7 @@ from unittest.mock import Mock
 
 import pytest
 from fastapi.testclient import TestClient
-
+from app.config import Settings
 from app.guardrails import APPROVED_QUERIES
 from app.main import app
 
@@ -13,8 +13,11 @@ from app.main import app
 @pytest.fixture(scope="module")
 def client() -> Iterator[TestClient]:
     """Start the API with the local database."""
-    with TestClient(app) as test_client:
-        yield test_client
+    with TestClient(app) as client:
+        client.headers["X-API-Key"] = (
+            Settings().app_api_key.get_secret_value()
+        )
+        yield client
 
 
 def test_supported_question(client: TestClient, monkeypatch) -> None:
@@ -85,4 +88,27 @@ def test_empty_question(client: TestClient, monkeypatch) -> None:
     response = client.post("/api/ask", json={"question": ""})
 
     assert response.status_code == 422
+    generator.assert_not_called()
+
+@pytest.mark.parametrize("api_key", [None, "invalid-test-key"])
+def test_unauthorized_question(client, monkeypatch, api_key):
+    """Reject missing or invalid keys before calling the AI."""
+    generator = Mock()
+    monkeypatch.setattr("app.ask.generate_query", generator)
+
+    headers = dict(client.headers)
+    headers.pop("x-api-key", None)
+    if api_key is not None:
+        headers["X-API-Key"] = api_key
+
+    # A separate client avoids inheriting the fixture's valid key.
+    with TestClient(app) as unauthorized_client:
+        response = unauthorized_client.post(
+            "/api/ask",
+            json={"question": "Recommend 5 movies for user 1"},
+            headers=headers,
+        )
+
+    assert response.status_code == 401
+    assert response.json()["detail"] == "Missing or invalid API key."
     generator.assert_not_called()

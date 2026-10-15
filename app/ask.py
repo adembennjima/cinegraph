@@ -5,9 +5,9 @@ from neo4j import Query
 from neo4j.exceptions import DriverError, Neo4jError
 from openai import OpenAIError
 from pydantic import BaseModel, Field, JsonValue
-
+from app.security import require_api_key
 from app.ai import generate_query
-
+from fastapi import Depends
 router = APIRouter(prefix="/api", tags=["AI"])
 
 
@@ -28,7 +28,11 @@ class AskResponse(BaseModel):
     results: list[dict[str, JsonValue]]
 
 
-@router.post("/ask", response_model=AskResponse)
+@router.post(
+    "/ask",
+    response_model=AskResponse,
+    dependencies=[Depends(require_api_key)],
+)
 def ask_graph(payload: AskRequest, request: Request) -> AskResponse:
     """Generate, validate, and execute an approved read query."""
     try:
