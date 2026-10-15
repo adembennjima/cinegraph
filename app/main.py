@@ -2,7 +2,7 @@
 
 from contextlib import asynccontextmanager
 from collections.abc import AsyncIterator
-
+from app.discovery import router as discovery_router
 from fastapi import FastAPI, HTTPException, Request
 from neo4j import GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
@@ -65,3 +65,4 @@ def database_health(request: Request) -> dict[str, str]:
         ) from error
 app.include_router(recommendations_router)
 app.include_router(movies_router)
+app.include_router(discovery_router)
