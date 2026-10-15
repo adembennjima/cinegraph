@@ -68,7 +68,7 @@ def main() -> None:
 
             if graph_exists:
                 session.run(
-                    "CALL gds.graph.drop('movie-audiences')"
+                    "CALL gds.graph.drop('movie-audiences') YIELD graphName RETURN graphName"
                 ).consume()
 
             projection = session.run(PROJECTION_QUERY).single()

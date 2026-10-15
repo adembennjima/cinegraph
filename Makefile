@@ -4,6 +4,8 @@ PYTHON ?= python
 .PHONY: help install run docker-run docker-stop test lint ml clean
 
 help:
+	@echo "make setup-data   Download, import and build the graph"
+	@echo "make benchmark    Compare scan and index performance"
 	@echo "make install      Install Python dependencies"
 	@echo "make run          Run FastAPI locally"
 	@echo "make docker-run   Build and start all three services"
@@ -37,3 +39,17 @@ ml:
 
 clean:
 	$(PYTHON) -c "from pathlib import Path; import shutil; roots = [Path(p) for p in ('app', 'scripts', 'ui', 'tests')]; [shutil.rmtree(p) for root in roots for p in root.rglob('__pycache__')]; [shutil.rmtree(p) for p in (Path('.pytest_cache'), Path('htmlcov')) if p.exists()]; Path('.coverage').unlink(missing_ok=True)"
+
+.PHONY: setup-data benchmark
+
+setup-data:
+	$(PYTHON) -m scripts.download_data
+	$(PYTHON) -m scripts.create_schema
+	$(PYTHON) -m scripts.import_movies
+	$(PYTHON) -m scripts.import_ratings
+	$(PYTHON) -m scripts.build_similarity
+	$(PYTHON) -m scripts.build_rankings
+	$(PYTHON) -m scripts.build_communities
+
+benchmark:
+	$(PYTHON) -m scripts.benchmark_queries
