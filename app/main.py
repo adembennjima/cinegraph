@@ -6,7 +6,7 @@ from app.discovery import router as discovery_router
 from fastapi import FastAPI, HTTPException, Request
 from neo4j import GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
-
+from app.ask import router as ask_router
 from app.config import Settings
 from app.recommendations import router as recommendations_router
 from app.movies import router as movies_router
@@ -66,3 +66,4 @@ def database_health(request: Request) -> dict[str, str]:
 app.include_router(recommendations_router)
 app.include_router(movies_router)
 app.include_router(discovery_router)
+app.include_router(ask_router)
