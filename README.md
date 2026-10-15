@@ -332,6 +332,25 @@ Tests cover API behavior, recommendation evidence, similarity results, validatio
 
 GitHub Actions installs dependencies, starts a fresh Neo4j database, builds the graph, runs lint and tests, and builds the application image.
 
+## Live AI evaluation
+
+Run manually with Docker running and OpenAI configured:
+
+    python -m scripts.evaluate_ai
+
+One recorded run passed 8 out of 8 cases:
+
+- Three supported questions selected the expected query and parameters.
+- Returned movies matched the corresponding direct API responses.
+- Two questions without explicit IDs were rejected.
+- Two modification requests were rejected.
+- A request exceeding the allowed result limit was rejected.
+
+Detailed outcomes are saved in `reports/ai_evaluation.json`.
+
+This is a small, fixed evaluation set with one run per question.
+It does not establish general reliability or recommendation quality.
+
 ## Useful commands
 
 | Command | Action |
@@ -361,3 +380,17 @@ After changing application code, run `make docker-run` to rebuild the image and 
 - API-key authentication protects direct access to `/api/ask`; the local Streamlit interface is not a user-login system.
 - Dependencies are currently installed from unpinned requirements.
 - The project is a local academic prototype.
+
+## Interface screenshots
+
+### Personalized recommendations
+
+![Personalized movie recommendations](docs/screenshots/recommendations.png)
+
+### Supporting graph evidence
+
+![Supporting viewers and shared favorites](docs/screenshots/evidence.png)
+
+### Natural-language query transparency
+
+![AI results and approved Cypher query](docs/screenshots/ai-query.png)
