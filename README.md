@@ -1,5 +1,9 @@
 # CineGraph
 
+[![CI](https://github.com/adembennjima/cinegraph/actions/workflows/ci.yml/badge.svg?branch=feature%2Fgraph-algorithms)](https://github.com/adembennjima/cinegraph/actions)
+![Coverage](https://img.shields.io/badge/measured_backend_coverage-78%25-brightgreen)
+![Pylint](https://img.shields.io/badge/measured_pylint-9.73%2F10-brightgreen)
+
 Graph-based movie discovery using Neo4j, FastAPI, Streamlit, and MovieLens.
 
 CineGraph recommends unseen films using viewers with shared favorites, finds movies with similar audiences, and explores movie communities. Recommendations include evidence from the graph.
@@ -394,3 +398,21 @@ After changing application code, run `make docker-run` to rebuild the image and 
 ### Natural-language query transparency
 
 ![AI results and approved Cypher query](docs/screenshots/ai-query.png)
+
+## Published Docker image
+
+Image: [adembennjima/cinegraph](https://hub.docker.com/r/adembennjima/cinegraph)
+
+Version `1.0.0` supports `linux/amd64` and `linux/arm64`.
+
+Download it with:
+
+    docker pull adembennjima/cinegraph:1.0.0
+
+The image contains the FastAPI application, Streamlit interface,
+and Python scripts. Its default command starts FastAPI.
+
+Neo4j runs separately. Database contents and private credentials
+are not included in the image.
+
+The documented Docker Compose setup builds the application locally.
