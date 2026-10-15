@@ -1,6 +1,6 @@
 # CineGraph
 
-[![CI](https://github.com/adembennjima/cinegraph/actions/workflows/ci.yml/badge.svg?branch=feature%2Fgraph-algorithms)](https://github.com/adembennjima/cinegraph/actions)
+[![CI](https://github.com/adembennjima/cinegraph/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/adembennjima/cinegraph/actions)
 ![Coverage](https://img.shields.io/badge/measured_backend_coverage-78%25-brightgreen)
 ![Pylint](https://img.shields.io/badge/measured_pylint-9.73%2F10-brightgreen)
 
@@ -416,3 +416,4 @@ Neo4j runs separately. Database contents and private credentials
 are not included in the image.
 
 The documented Docker Compose setup builds the application locally.
+See [Graph modeling decisions and schema comparison](docs/modeling.md).
