@@ -417,3 +417,13 @@ are not included in the image.
 
 The documented Docker Compose setup builds the application locally.
 See [Graph modeling decisions and schema comparison](docs/modeling.md).
+
+## Author and development history
+
+Individual project by Adem Ben Njima.
+
+- [Merged implementation pull request](https://github.com/adembennjima/cinegraph/pulls)
+- [Commit history](https://github.com/adembennjima/cinegraph/commits/main)
+
+The pull request includes two post-merge self-review notes prepared
+with AI assistance.
